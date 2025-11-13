@@ -166,33 +166,6 @@ API_KEY=your_secure_api_key_here
 - Replace `your_actual_intercom_token_here` with your real Intercom access token
 - Replace `your_secure_api_key_here` with a secure random string (e.g., `sk_live_abc123xyz789`)
 
-#### Create .gitignore
-
-```bash
-cat > .gitignore << 'EOF'
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-.venv/
-venv/
-env/
-ENV/
-.env
-*.log
-.DS_Store
-.vscode/
-.idea/
-*.egg-info/
-dist/
-build/
-.pytest_cache/
-.ruff_cache/
-uv.lock
-EOF
-```
-
 ## 🏃 Running the Application
 
 ### Development Mode (with auto-reload)
@@ -341,14 +314,14 @@ print(response.json())
 
 ## 📋 Available Endpoints
 
-| Method | Endpoint                 | Description      | Auth Required |
-| ------ | ------------------------ | ---------------- | ------------- |
-| GET    | `/`                      | Root endpoint    | ❌            |
-| GET    | `/health`                | Health check     | ❌            |
-| POST   | `/api/v1/contacts`       | Create a contact | ✅            |
-| GET    | `/api/v1/contacts/{id}`  | Get a contact    | ✅            |
-| POST   | `/api/v1/companies`      | Create a company | ✅            |
-| GET    | `/api/v1/companies/{id}` | Get a company    | ✅            |
+| Method | Endpoint                 | Description      | Auth Required | Done? |
+| ------ | ------------------------ | ---------------- | ------------- | ------ |
+| GET    | `/`                      | Root endpoint    | ❌            | ❌ |
+| GET    | `/health`                | Health check     | ❌            | ❌ |
+| POST   | `/api/v1/contacts`       | Create a contact | ✅            | ❌ |
+| GET    | `/api/v1/contacts/{id}`  | Get a contact    | ✅            | ❌ |
+| POST   | `/api/v1/companies`      | Create a company | ✅            | ❌ |
+| GET    | `/api/v1/companies/{id}` | Get a company    | ✅            | ❌ |
 
 ## 🔑 Authentication
 
@@ -478,59 +451,6 @@ If you installed dev dependencies:
 ```bash
 uv run pytest
 ```
-
-## 📝 Project Structure Explained
-
-```
-app/
-├── main.py              # Application entry point, FastAPI app initialization
-├── config/
-│   ├── settings.py      # Environment variables and configuration
-│   └── intercom.py      # Intercom client initialization
-├── models/
-│   ├── contact.py       # Pydantic models for contacts
-│   └── company.py       # Pydantic models for companies
-├── services/
-│   └── intercom_service.py  # Business logic for Intercom operations
-├── routes/
-│   ├── contact.py       # Contact endpoints
-│   └── company.py       # Company endpoints
-├── middleware/
-│   └── auth.py          # Authentication middleware
-└── utils/
-    └── responses.py     # Response helper functions
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests and linting
-5. Submit a pull request
-
-## 📄 License
-
-MIT License
-
-## 🆘 Support
-
-If you encounter any issues:
-
-1. Check the [Troubleshooting](#-troubleshooting) section
-2. Review the [Intercom API documentation](https://developers.intercom.com/)
-3. Check UV documentation at [astral.sh/uv](https://astral.sh/uv)
-
-## 🎯 Next Steps
-
-- [ ] Add unit tests with pytest
-- [ ] Implement update and delete endpoints
-- [ ] Add rate limiting
-- [ ] Implement caching with Redis
-- [ ] Add database for storing mappings
-- [ ] Set up CI/CD pipeline
-- [ ] Add webhook handlers for Intercom events
-- [ ] Implement logging with structured logs
 
 ---
 
