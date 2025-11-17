@@ -315,13 +315,14 @@ print(response.json())
 ## 📋 Available Endpoints
 
 | Method | Endpoint                 | Description      | Auth Required | Done? |
-| ------ | ------------------------ | ---------------- | ------------- | ------ |
-| GET    | `/`                      | Root endpoint    | ❌            | ❌ |
-| GET    | `/health`                | Health check     | ❌            | ❌ |
-| POST   | `/api/v1/contacts`       | Create a contact | ✅            | ❌ |
-| GET    | `/api/v1/contacts/{id}`  | Get a contact    | ✅            | ❌ |
-| POST   | `/api/v1/companies`      | Create a company | ✅            | ❌ |
-| GET    | `/api/v1/companies/{id}` | Get a company    | ✅            | ❌ |
+| ------ | ------------------------ | ---------------- | ------------- | ----- |
+| GET    | `/`                      | Root endpoint    | ❌            | ❌    |
+| GET    | `/health`                | Health check     | ❌            | ❌    |
+| POST   | `/api/v1/contacts`       | Create a contact | ✅            | ❌    |
+| GET    | `/api/v1/get-contacts`   | Get all contact  | ✅            | ❌    |
+| GET    | `/api/v1/contacts/{id}`  | Get a contact    | ✅            | ❌    |
+| POST   | `/api/v1/companies`      | Create a company | ✅            | ❌    |
+| GET    | `/api/v1/companies/{id}` | Get a company    | ✅            | ❌    |
 
 ## 🔑 Authentication
 
