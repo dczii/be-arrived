@@ -1,6 +1,6 @@
 import httpx
 from fastapi import APIRouter, status, HTTPException
-from configs import env
+from configs.env import env
 from app.lib.schemas import contact
 from datetime import datetime
 from app.utils.responses import COMMON_RESPONSES

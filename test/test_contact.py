@@ -118,7 +118,7 @@ class TestCreateContact:
         response = client.post(INTERNAL_API_URL, json=valid_payload)
         assert response.status_code == 201
         assert response.json() == mock_response_data
-
+        assert "message" in response.json()
         actual_request = respx_mock.calls.last.request
         sent_payload = json.loads(actual_request.content)
         assert isinstance(sent_payload["signed_up_at"], int)
