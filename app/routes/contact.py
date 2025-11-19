@@ -1,6 +1,6 @@
 import httpx
 from fastapi import APIRouter, status, HTTPException
-from app.configs import env
+from configs import env
 from app.lib.schemas import contact
 from datetime import datetime
 from app.utils.responses import COMMON_RESPONSES
@@ -44,13 +44,13 @@ async def get_all_contacts():
 
         raise HTTPException(
             status_code=err.response.status_code,
-            detail={"code": error_code, "message": error_msg},
+            detail={"code": error_code.upper(), "message": error_msg},
         )
 
     except httpx.RequestError:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail={"code": "SERVICE_UNAVAILABLE", "message": "Can't reach Intercom."},
+            detail={"code": "SERVICE_UNAVAILABLE", "message": "Connection refused"},
         )
 
     except Exception as err:
@@ -58,8 +58,10 @@ async def get_all_contacts():
         print(f"Unexpected error occurred: {str(err)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            code="INTERNAL_ERROR",
-            message="Internal server error.",
+            detail={
+                "code": "INTERNAL_ERROR",
+                "message": "Internal server error",
+            }
         )
 
 
@@ -69,7 +71,7 @@ async def get_all_contacts():
     status_code=status.HTTP_201_CREATED,
     summary="Create a contact",
     responses={
-        **COMMON_RESPONSES, #include all error responses
+        **COMMON_RESPONSES,  # include all error responses
     },
 )
 async def create_contact(contact_data: contact.ContactCreate):
@@ -83,7 +85,7 @@ async def create_contact(contact_data: contact.ContactCreate):
         async with httpx.AsyncClient(headers=INTERCOM_HEADERS) as client:
             response = await client.post(INTERCOM_URL, json=payload)
             response.raise_for_status()  # only for 4xx-5xx
-            return response.json()
+            return {"message": "Contact created successfully"}
 
     except httpx.HTTPStatusError as err:
         try:
@@ -99,19 +101,18 @@ async def create_contact(contact_data: contact.ContactCreate):
 
         raise HTTPException(
             status_code=err.response.status_code,
-            detail={"code": error_code, "message": error_msg},
+            detail={"code": error_code.upper(), "message": error_msg},
         )
 
     except httpx.RequestError:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail={"code": "SERVICE_UNAVAILABLE", "message": "Can't reach Intercom"},
+            detail={"code": "SERVICE_UNAVAILABLE", "message": "Connection refused"},
         )
 
     except Exception as err:
         print(f"Unexpected error occurred: {str(err)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            code="INTERNAL_ERROR",
-            message="Internal server error.",
+            detail={"code": "INTERNAL_ERROR", "message": "Internal server error"},
         )

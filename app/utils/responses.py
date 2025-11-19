@@ -7,5 +7,8 @@ COMMON_RESPONSES = {
     },
     422: {"model": error_response.ValidationError, "summary": "Validation error"},
     500: {"model": error_response.ErrorResponse, "summary": "Internal Server Error"},
-    503: {"model": error_response.ErrorResponse, "summary": "Service Unavailable"},
+    503: {
+        "model": error_response.UnavailableServiceError,
+        "summary": "Service Unavailable",
+    },
 }
