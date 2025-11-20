@@ -7,10 +7,10 @@ from app.routes import index
 
 app = FastAPI()
 
-
 @app.get("/")
 def root():
     return {"message": "hello world"}
+
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(req: Request, exc: RequestValidationError):
@@ -18,11 +18,9 @@ async def validation_exception_handler(req: Request, exc: RequestValidationError
 
     return JSONResponse(
         status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
-        content={
-            "code": "VALIDATION_ERROR",
-            "message": f"Invalid input: {error_msg}"
-        }
+        content={"code": "VALIDATION_ERROR", "message": f"Invalid input: {error_msg}"},
     )
+
 
 @app.exception_handler(HTTPException)
 async def http_exception_handler(req: Request, exc: HTTPException):
@@ -34,11 +32,7 @@ async def http_exception_handler(req: Request, exc: HTTPException):
         message = str(exc.detail)
 
     return JSONResponse(
-        status_code=exc.status_code,
-        content={
-            "code": code,
-            "message": message
-        }
+        status_code=exc.status_code, content={"code": code, "message": message}
     )
 
 
