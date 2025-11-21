@@ -1,9 +1,13 @@
 from pydantic import BaseModel
 
 
-class ErrorResponse(BaseModel):
+class BaseResponse(BaseModel):
+    message: str 
+
+
+# error responses:
+class ErrorResponse(BaseResponse):
     code: str
-    message: str
 
 
 class ValidationError(ErrorResponse):
@@ -16,7 +20,6 @@ class ValidationError(ErrorResponse):
         }
     }
 
-
 class UnauthorizedError(ErrorResponse):
     model_config = {
         "json_schema_extra": {
@@ -26,7 +29,6 @@ class UnauthorizedError(ErrorResponse):
             }
         }
     }
-
 
 class UnavailableServiceError(ErrorResponse):
     model_config = {
