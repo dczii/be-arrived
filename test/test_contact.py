@@ -107,8 +107,6 @@ class TestGetAllContacts:
         )
 
 class TestCreateContact:
-
-    
     async def test_success(
         self, respx_mock, async_client, valid_create_contact_payload
     ):
@@ -148,14 +146,6 @@ class TestCreateContact:
 
     
     async def test_validation_error(self, respx_mock, async_client):
-        error_response = {
-            "errors": [{"code": "VALIDATION_ERROR", "message": "Email required"}]
-        }
-
-        respx_mock.post(INTERCOM_URL).mock(
-            return_value=Response(422, json=error_response)
-        )
-
         response = await async_client.post(INTERNAL_API_URL, json={})
         assert_error_response(response, 422, "VALIDATION_ERROR")
 
